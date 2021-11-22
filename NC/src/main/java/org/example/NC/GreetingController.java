@@ -1,5 +1,6 @@
 package org.example.NC;
 
+import org.example.NC.domain.Tariff;
 import org.example.NC.domain.TariffСategory;
 import org.example.NC.repos.ClientRepo;
 import org.example.NC.repos.TariffRepo;
@@ -15,6 +16,8 @@ import java.util.Map;
 public class GreetingController {
     @Autowired
     private ClientRepo clientRepo;
+    @Autowired
+    private TariffRepo tariffRepo;
     /*@GetMapping("/greeting")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
@@ -25,5 +28,11 @@ public class GreetingController {
         model.put("some", "hello!");
         return "main";
     }
+    @GetMapping("/tariff")
+    public String tariff(Map<String, Object> model) {
+        Iterable<Tariff> tariffs = tariffRepo.findAll();
 
+        model.put("tariff", tariffs);
+        return "tariff";
+    }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface TariffRepo extends CrudRepository<Tariff, Long> {
-    List<Tariff> findByTag(String tag);
+    List<Tariff> findByName(String name);
 }
