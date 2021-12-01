@@ -1,21 +1,18 @@
-package org.example.NC;
+package org.example.NC.controller;
 
 import org.example.NC.domain.Tariff;
-import org.example.NC.domain.TariffСategory;
-import org.example.NC.repos.ClientRepo;
+import org.example.NC.repos.UserRepo;
 import org.example.NC.repos.TariffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
 @Controller
 public class GreetingController {
     @Autowired
-    private ClientRepo clientRepo;
+    private UserRepo clientRepo;
     @Autowired
     private TariffRepo tariffRepo;
     /*@GetMapping("/greeting")

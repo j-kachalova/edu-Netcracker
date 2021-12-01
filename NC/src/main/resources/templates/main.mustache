@@ -5,7 +5,12 @@
     <link rel="stylesheet" href="style/index.css">
 </head>
 <body>
-<div>Тарифы</div>
-<div></div>
+
+<div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
 </body>
 </html>
