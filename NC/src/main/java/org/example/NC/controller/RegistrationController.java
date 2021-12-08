@@ -23,7 +23,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(Client client, Map<String, Object> model) {
-        Client clientFromDb = userRepo.findByLogin(client.getLogin());
+        Client clientFromDb = userRepo.findByUsername(client.getUsername());
 
         if (clientFromDb != null) {
             return "registration";

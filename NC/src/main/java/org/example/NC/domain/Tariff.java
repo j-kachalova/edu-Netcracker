@@ -3,10 +3,7 @@ package org.example.NC.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -18,4 +15,11 @@ public class Tariff {
     private String name;
     private Integer price;
 
+   /* @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idCategory")
+    private TariffСategory tariffСategory;*/
+
+    /*public String getTariffСategoryName(){
+        return tariffСategory.getName();
+    }*/
 }
