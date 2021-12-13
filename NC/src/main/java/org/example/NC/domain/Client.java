@@ -14,7 +14,7 @@ import java.util.Set;
 public class Client  implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String username;
     private String password;
     private String surname;
@@ -41,6 +41,16 @@ public class Client  implements UserDetails {
    @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getName() {
+        return name != null ?  name : "<none>";
+    }
+    public String getSurname() {
+        return surname != null ?  surname : "<none>";
+    }
+    public String getPatronymic() {
+        return patronymic != null ?  patronymic : "<none>";
     }
 
     @Override
