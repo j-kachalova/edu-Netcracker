@@ -1,0 +1,79 @@
+-- Database: NC
+
+-- DROP DATABASE IF EXISTS "NC";
+
+CREATE DATABASE "NC"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Russian_Russia.1251'
+    LC_CTYPE = 'Russian_Russia.1251'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+CREATE TABLE IF NOT EXISTS public.client
+(
+    id integer NOT NULL,
+    address character varying(255) COLLATE pg_catalog."default",
+    discount integer,
+    gender character varying(255) COLLATE pg_catalog."default",
+    name character varying(255) COLLATE pg_catalog."default",
+    patronymic character varying(255) COLLATE pg_catalog."default",
+    surname character varying(255) COLLATE pg_catalog."default",
+    active boolean NOT NULL,
+    password character varying(255) COLLATE pg_catalog."default",
+    username character varying(255) COLLATE pg_catalog."default",
+    activation_code character varying(255) COLLATE pg_catalog."default",
+    email character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT client_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.client
+    OWNER to postgres;
+	
+CREATE TABLE IF NOT EXISTS public.tariff
+(
+    id integer NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default",
+    price integer,
+    id_category integer,
+    CONSTRAINT tariff_pkey PRIMARY KEY (id),
+    CONSTRAINT fkk15ow05nxoyg5u5snfr1pj06c FOREIGN KEY (id_category)
+        REFERENCES public."tariff_сategory" (id_category) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tariff
+    OWNER to postgres;
+	
+CREATE TABLE IF NOT EXISTS public."tariff_сategory"
+(
+    id_category integer NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT "tariff_сategory_pkey" PRIMARY KEY (id_category)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."tariff_сategory"
+    OWNER to postgres;
+	
+CREATE TABLE IF NOT EXISTS public.user_role
+(
+    user_id integer NOT NULL,
+    roles character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT fkn9c0xpoqj8btnfgue4qu0nb06 FOREIGN KEY (user_id)
+        REFERENCES public.client (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.user_role
+    OWNER to postgres;
