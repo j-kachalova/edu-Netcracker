@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
-public class Client  implements UserDetails {
+public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
