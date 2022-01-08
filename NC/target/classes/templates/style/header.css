@@ -8,8 +8,6 @@ body{
     width: 100%;
     background-color: black;
     color: white;
-    display: flex;
-    justify-content: flex-start;
 }
 .header{
     background-color: black;
@@ -59,4 +57,10 @@ body{
     color: white;
     /*background-color: white;*/
     margin-bottom: 100px;
+    padding-top: 68px;
+    display: flex;
+    justify-content: flex-start;
+}
+.tariff{
+    padding: 50px 100px 50px 100px;
 }

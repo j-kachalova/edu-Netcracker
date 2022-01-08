@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TariffRepo extends CrudRepository<Tariff, Long> {
+public interface TariffRepo extends CrudRepository<Tariff, Integer> {
     List<Tariff> findByName(String name);
 }

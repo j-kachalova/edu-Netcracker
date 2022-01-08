@@ -7,16 +7,19 @@
             <@l.logout />
         </div>
     </@h.header>
-    <main>
-        <div>Тарифы</div>
-        <#list tariff as tariff>
-            <div>
-                <div>${tariff.name}</div>
-                <div>${tariff.price}</div>
-            </div>
-
-        <#else>
-            Нет доступных тарифов
-        </#list>
+    <main class="main">
+        <div class="tariff">
+            <h1>Тарифы</h1>
+            <#list tariff as tariff>
+                <form action="/tariff_choice" method="post">
+                    <div>${tariff.name}</div>
+                    <div>${tariff.price}</div>
+                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                    <div><input type="submit" value="Выбрать"/></div>
+                </form>
+            <#else>
+                Нет доступных тарифов
+            </#list>
+        </div>
     </main>
 </@c.page>

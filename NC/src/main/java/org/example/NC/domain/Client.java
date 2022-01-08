@@ -14,7 +14,7 @@ import java.util.Set;
 public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
     private String username;
     private String password;
     private String surname;
@@ -22,7 +22,7 @@ public class Client implements UserDetails {
     private String patronymic;
     private String gender;
     private String address;
-    private Integer discount;
+
     private boolean active;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
