@@ -2,18 +2,16 @@ package org.example.NC.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
-public class Order {
+@Table(name = "order")
+public class OrderSIM {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer idEmployee;
     private Integer idAddress;
-    private Integer number;
+    private Integer num;
 }
