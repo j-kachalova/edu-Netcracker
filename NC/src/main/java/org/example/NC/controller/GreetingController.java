@@ -4,6 +4,7 @@ import org.example.NC.domain.Tariff;
 import org.example.NC.repos.UserRepo;
 import org.example.NC.repos.TariffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -20,12 +21,12 @@ public class GreetingController {
         model.addAttribute("name", name);
         return "greeting";
     }*/
-    @GetMapping
+    /*@GetMapping
     public String main(Map<String, Object> model) {
         model.put("some", "hello!");
         return "main";
-    }
-    @GetMapping("/tariff")
+    }*/
+    @GetMapping
     public String tariff(Map<String, Object> model) {
         Iterable<Tariff> tariffs = tariffRepo.findAll();
 

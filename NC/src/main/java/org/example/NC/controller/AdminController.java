@@ -33,6 +33,7 @@ public class AdminController {
         model.addAttribute("roles", Role.values());
         return "userEdit";
     }
+
     @PostMapping
     public String userSave(
             @RequestParam String username,

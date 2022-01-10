@@ -1,17 +1,31 @@
 package org.example.NC.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "order")
 public class OrderSIM {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer idEmployee;
-    private Integer idAddress;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
+    private Address address;
     private Integer num;
+
+    public OrderSIM(Integer idEmployee, Address address, Integer num) {
+        this.idEmployee = idEmployee;
+        this.address = address;
+        this.num = num;
+    }
+
+    public OrderSIM() {
+
+    }
 }

@@ -8,9 +8,9 @@
                         <img class="logo-img" src="" alt="" height="49px">
                     </a>
                 </div>
-                <a class="header__link" href="#"> Тарифы </a>
+                <a class="header__link" href="/"> Тарифы </a>
                 <a class="header__link" href="#"> Акции </a>
-                <a class="header__link" href="#"> Личный кабинет </a>
+                <a class="header__link" href="../personalArea"> Личный кабинет </a>
                 <#nested>
             </div>
         </nav>
