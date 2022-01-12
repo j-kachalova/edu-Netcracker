@@ -11,7 +11,9 @@ public class Tariff {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Integer idCategory;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_category")
+    private TariffСategory category;
     private String name;
     private Integer price;
 

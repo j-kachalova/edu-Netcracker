@@ -9,7 +9,6 @@
     </@h.header>
     <main class="main">
         <div>
-            <@l.logout/>
             <div>Текущий тариф</div>
         </div>
     </main>

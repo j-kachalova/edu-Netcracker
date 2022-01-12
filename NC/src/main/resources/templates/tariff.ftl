@@ -11,12 +11,15 @@
         <div class="tariff">
             <h1>Тарифы</h1>
             <#list tariff as tariff>
+                <div>${tariff.key.name}</div>
+                <#list tariff.value as value>
                 <form action="/tariff_choice" method="post">
-                    <div>${tariff.name}</div>
-                    <div>${tariff.price}</div>
+                    <div>${value.name}</div>
+                    <div>${value.price}</div>
                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
                     <div><input type="submit" value="Выбрать"/></div>
                 </form>
+                </#list>
             <#else>
                 Нет доступных тарифов
             </#list>
