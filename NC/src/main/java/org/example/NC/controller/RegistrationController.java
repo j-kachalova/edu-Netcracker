@@ -1,6 +1,6 @@
 package org.example.NC.controller;
 
-import org.example.NC.domain.Client;
+import org.example.NC.domain.Human;
 import org.example.NC.domain.Role;
 import org.example.NC.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(Client user, Map<String, Object> model) {
-        Client userFromDb = userRepo.findByUsername(user.getUsername());
+    public String addUser(Human user, Map<String, Object> model) {
+        Human userFromDb = userRepo.findByUsername(user.getUsername());
 
         if (userFromDb != null) {
             model.put("message", "User exists!");

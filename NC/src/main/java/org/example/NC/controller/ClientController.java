@@ -1,13 +1,10 @@
 package org.example.NC.controller;
 
-import org.example.NC.domain.Client;
-import org.example.NC.domain.Role;
+import org.example.NC.domain.Human;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
@@ -22,7 +19,7 @@ public class ClientController {
                                @RequestParam String surname,
                                @RequestParam String patronymic,
                                @RequestParam Map<String, String> form,
-                               @RequestParam("userId") Client user,
+                               @RequestParam("userId") Human user,
                                Model model){
         //model.addAttribute("users", userRepo.findAll());
 

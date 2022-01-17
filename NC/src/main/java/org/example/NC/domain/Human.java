@@ -1,23 +1,21 @@
 package org.example.NC.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-
-@MappedSuperclass
-@ToString
-@Getter
-@Setter
+@Data
+@Entity
+@Table(name = "human", schema = "public")
+@Inheritance
 public class Human implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String username;
     private String password;
@@ -26,8 +24,8 @@ public class Human implements UserDetails {
     private String patronymic;
     private String gender;
     private String address;
+
     private boolean active;
-    private Role role;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -42,7 +40,7 @@ public class Human implements UserDetails {
         return getRoles();
     }
 
-    @Override
+   @Override
     public String getUsername() {
         return username;
     }
@@ -77,3 +75,4 @@ public class Human implements UserDetails {
         return isActive();
     }
 }
+
