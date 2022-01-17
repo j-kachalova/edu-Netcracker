@@ -1,32 +1,21 @@
 package org.example.NC.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.math.BigDecimal;
+import lombok.Data;
+import javax.persistence.*;
 
 
-@ToString
+
 @Entity
-
-@Getter
-@Setter
-public class Employee extends Human {
-    /**
-     * Operation's account.
-     */
-
-    @Column(nullable = false, updatable = false)
-    private Integer accountId;
-
-    /**
-     * Operation's amount.
-     */
-
-    @Column(nullable = false, updatable = false, scale = 2, precision = 10)
-    private BigDecimal amount;
+@Data
+public class Employee{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
+    private Human human;
+    private String position;
+    @ManyToOne
+    @JoinColumn(name = "boss_id")
+    private Employee boss;
 }

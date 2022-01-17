@@ -1,6 +1,6 @@
 package org.example.NC.controller;
 
-import org.example.NC.domain.Client;
+import org.example.NC.domain.Human;
 import org.example.NC.domain.Role;
 import org.example.NC.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class AdminController {
         return "userList";
     }
     @GetMapping("{user}")
-    public String userEditForm(@PathVariable Client user, Model model) {
+    public String userEditForm(@PathVariable Human user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "userEdit";
@@ -41,7 +41,7 @@ public class AdminController {
             @RequestParam String surname,
             @RequestParam String patronymic,
             @RequestParam Map<String, String> form,
-            @RequestParam("userId") Client user
+            @RequestParam("userId") Human user
     ) {
         user.setUsername(username);
         user.setName(name);
