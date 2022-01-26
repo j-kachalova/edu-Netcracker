@@ -9,7 +9,7 @@
     </@h.header>
     <main class="main">
         <div>
-            <form action="/sim " method="post">
+            <form action="/sim1 " method="post">
                 <div>${human.name}</div>
                 <div>${human.surname}</div>
                 <div>${human.patronymic}</div>

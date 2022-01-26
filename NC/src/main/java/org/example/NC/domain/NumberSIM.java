@@ -15,4 +15,11 @@ public class NumberSIM {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
+
+    /*public NumberSIM(Integer id, String num, boolean isUsed, Client client) {
+        this.id = id;
+        this.num = num;
+        this.isUsed = isUsed;
+        this.client = client;
+    }*/
 }
