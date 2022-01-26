@@ -2,7 +2,7 @@
 <#import "parts/loginTmp.ftlh" as l>
 
 <@c.page>
-Login page
+    Вход в личный кабинет
 <@l.loginTmp "/login" />
-<a href="/registration">Add new user</a>
+<a class="button" href="/registration">Add new user</a>
 </@c.page>

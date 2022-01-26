@@ -48,6 +48,6 @@ public class GreetingController {
             System.out.println();
         }
         model.put("tariff", tariffByCategory.entrySet());
-        return "tariff";
+        return "tariff2";
     }
 }

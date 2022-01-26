@@ -8,8 +8,8 @@
         </div>
     </@h.header>
     <main class="main">
-        <div>
-            <div>Текущий тариф</div>
+        <div style="margin: 20px">
+            <a class="button" href="/purchase">Купить SIM-карту</a>
         </div>
     </main>
 </@c.page>

@@ -1,15 +1,15 @@
 <#macro loginTmp path>
-<form action="${path}" method="post">
-    <div><label> Login : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
+<form action="${path}" method="post" style="margin-bottom: 10px">
+    <div><label> Логин : <input type="text" name="username"/> </label></div>
+    <div><label> Пароль: <input type="password" name="password"/> </label></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <div><input type="submit" value="Sign In"/></div>
+    <div><input class="button" type="submit" value="Войти"/></div>
 </form>
 </#macro>
 
 <#macro logout >
 <form action="/logout" method="post">
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <input type="submit" value="Sign Out"/>
+    <input class="button" type="submit" value="Выйти"/>
 </form>
 </#macro>

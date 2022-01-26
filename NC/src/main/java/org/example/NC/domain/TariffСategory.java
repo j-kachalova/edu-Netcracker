@@ -12,5 +12,4 @@ public class TariffСategory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idCategory;
     private String name;
-
 }

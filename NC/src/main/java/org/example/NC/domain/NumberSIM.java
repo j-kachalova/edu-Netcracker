@@ -6,12 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Client {
+public class NumberSIM {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private String num;
+    private boolean isUsed;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "human_id")
-    private Human human;
-    private Integer discount;
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

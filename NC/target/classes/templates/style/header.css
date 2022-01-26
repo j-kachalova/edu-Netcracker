@@ -64,3 +64,13 @@ body{
 .tariff{
     padding: 50px 100px 50px 100px;
 }
+.button{
+    background-color: #F7E018;
+    padding: 5px;
+    text-decoration: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: black;
+    border-radius: 5px;
+    border-style: none;
+}

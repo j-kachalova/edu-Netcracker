@@ -12,7 +12,7 @@ public class Employee{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "human_id")
     private Human human;
     private String position;
     @ManyToOne

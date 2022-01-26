@@ -15,7 +15,7 @@ public class OrderSIM {
     private Integer id;
     private Integer idEmployee;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "address_id")
     private Address address;
     private Integer num;
 
