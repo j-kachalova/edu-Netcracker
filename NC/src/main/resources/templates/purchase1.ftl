@@ -9,16 +9,14 @@
     </@h.header>
     <main class="main">
         <div>
-            <form action="/sim1 " method="post">
-                <div>${human.name}</div>
-                <div>${human.surname}</div>
-                <div>${human.patronymic}</div>
-                <div>${human.username}</div>
-                <select name="kindSim">
+            <form action="/purchase1 " method="post">
+
+                <select name="kind">
                     <option disabled selected value="">Выберите вид SIM-карты</option>
                     <option value="virtual">Виртуальная</option>
                     <option value="physical">Физическая</option>
                 </select>
+                <input type="hidden" name="sim" value="${simCard}" />
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <div><input class="button" type="submit" value="Далее"/></div>
             </form>

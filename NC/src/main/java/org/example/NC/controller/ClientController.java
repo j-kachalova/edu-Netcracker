@@ -13,9 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,8 +33,7 @@ public class ClientController {
     @Autowired
     private SIMCardRepo simCardRepo;
     @Autowired
-    private NumberRepo numberRepo;
-    public String chooseTariff(@RequestParam String username,
+    /*public String chooseTariff(@RequestParam String username,
                                @RequestParam String name,
                                @RequestParam String surname,
                                @RequestParam String patronymic,
@@ -46,22 +43,42 @@ public class ClientController {
         //model.addAttribute("users", userRepo.findAll());
 
         return "";
-    }
+    }   */
+    private NumberRepo numberRepo;
+    //private SIMCard simCard = new SIMCard();
+
     @GetMapping("/personalArea")
     public String personalArea(Map<String, Object> model) {
         return "personalArea";
     }
 
-    @PostMapping
+    /*@PostMapping("/sim1")
     public String chooseKindSIM( @RequestParam String kind,
                                  SIMCard simCard) {
         //model.put("human", userRepo.findByUsername(user.getUsername()));
         simCard.setKind(kind);
         simCardRepo.save(simCard);
-        return "/purchase2";
+        return "redirect:/purchase2";
+    }*/
+    @PostMapping("/purchase")
+    public String submitNum(@RequestParam String number,  @ModelAttribute("simCard") SIMCard simCard) {
+        simCard.setNumber(number);
+        System.out.println(simCard);
+        return "purchase1";
+    }
+    @PostMapping("/purchase1")
+    public String submitKindSIM(@RequestParam String kind /*@RequestParam("id")*/, @RequestParam("sim") SIMCard simCard) {
+        simCard.setKind(kind);
+        System.out.println(simCard.toString());
+        simCardRepo.save(simCard);
+        return "purchase2";
+    }
+    @PostMapping("/purchase2")
+    public String submitDelivery() {
+        return "personalArea";
     }
     @GetMapping("/purchase")
-    public String buy(Human user, Map<String, Object> model) {
+    public String selectNum(Human user, Map<String, Object> model, @ModelAttribute("simCard") SIMCard simCard) {
         //Human userFromDb = userRepo.findByUsername(user.getUsername());
         Human userFromDb = (Human) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
@@ -74,26 +91,25 @@ public class ClientController {
         if (userFromDb != null) {
             model.put("human", userFromDb);
             model.put("num", number);
+            model.put("simCard", simCard);
             return "purchase";
         }
-        /*List<NumberSIM> number = numberRepo.findAll().stream().filter(x-> x.isUsed()==false).collect(Collectors.toList());
-        System.out.println(number);*/
-        //Iterable<NumberSIM> num;
-        /*List<NumberSIM> number = StreamSupport.stream(numberRepo.findAll().spliterator(), false)
-                .filter(x -> !x.isUsed())
-                .collect(Collectors.toList());*/
-       /* List<NumberSIM> numbers = numberRepo.findAll();
-        for(int i=0; i<numbers.size(); i++){
-            System.out.println(numbers.get(i).toString());
-        }*/
-        /*List<NumberSIM> list = new ArrayList<>();
-        list.add(new NumberSIM(1, "ertyuiop;'", false, null));
-        model.put("num", new NumberSIM(1, "ertyuiop;'", false, null));*/
+
         return "purchase";
     }
-    @PostMapping("/sim")
+    @GetMapping("/purchase/{simCard}")
+    public String selectKindNum(/*@PathVariable SIMCard simCard*/Map<String, Object> model, @PathVariable SIMCard simCard) {
+        model.put("simCard", simCard);
+        return "purchase1";
+    }
+    @GetMapping("/purchase2")
+    public String selectDelivery(  Map<String, Object> model) {
+
+        return "purchase2";
+    }
+   /* @PostMapping("/sim1")
     public String chooseNum(Human user, Map<String, Object> model) {
         //model.put("human", userRepo.findByUsername(user.getUsername()));
         return "/sim2";
-    }
+    }*/
 }

@@ -9,17 +9,19 @@
     </@h.header>
     <main class="main">
         <div>
-            <form action="/sim " method="post">
+            <form modelAttribute="simCard" action="/purchase " method="post">
                 <div>${human.name}</div>
                 <div>${human.surname}</div>
                 <div>${human.patronymic}</div>
                 <div>${human.username}</div>
                 <#list num as num>
-                    <label><input type="radio" name="number">${num.num}</label>
+                    <label><input type="radio" name="number" value="${num.num}">${num.num}</label>
                 </#list>
+                <div>${simCard}</div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <div><input class="button" type="submit" value="Далее"/></div>
             </form>
         </div>
     </main>
+    <script src="script.js"></script>
 </@c.page>
