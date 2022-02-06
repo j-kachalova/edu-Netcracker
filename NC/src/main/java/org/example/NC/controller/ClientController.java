@@ -32,7 +32,7 @@ public class ClientController {
     private UserRepo userRepo;
     @Autowired
     private SIMCardRepo simCardRepo;
-    @Autowired
+
     /*public String chooseTariff(@RequestParam String username,
                                @RequestParam String name,
                                @RequestParam String surname,
@@ -44,8 +44,9 @@ public class ClientController {
 
         return "";
     }   */
+    @Autowired
     private NumberRepo numberRepo;
-    //private SIMCard simCard = new SIMCard();
+    private SIMCard simCardDTO = new SIMCard();
 
     @GetMapping("/personalArea")
     public String personalArea(Map<String, Object> model) {
@@ -63,14 +64,19 @@ public class ClientController {
     @PostMapping("/purchase")
     public String submitNum(@RequestParam String number,  @ModelAttribute("simCard") SIMCard simCard) {
         simCard.setNumber(number);
-        System.out.println(simCard);
+        simCardDTO.setNumber(number);
+        System.out.println(simCardDTO);
         return "purchase1";
     }
     @PostMapping("/purchase1")
-    public String submitKindSIM(@RequestParam String kind /*@RequestParam("id")*/, @RequestParam("sim") SIMCard simCard) {
-        simCard.setKind(kind);
-        System.out.println(simCard.toString());
-        simCardRepo.save(simCard);
+    public String submitKindSIM(@RequestParam String kind /*@RequestParam("id")*/, @RequestParam String simCard, SIMCard newSim) {
+        //simCard.setKind(kind);
+        System.out.println(simCard);
+        simCardDTO.setKind(kind);
+        newSim.setNumber(simCardDTO.getNumber());
+        newSim.setKind(simCardDTO.getKind());
+        System.out.println(newSim);
+        simCardRepo.save(newSim);
         return "purchase2";
     }
     @PostMapping("/purchase2")
@@ -98,7 +104,7 @@ public class ClientController {
         return "purchase";
     }
     @GetMapping("/purchase/{simCard}")
-    public String selectKindNum(/*@PathVariable SIMCard simCard*/Map<String, Object> model, @PathVariable SIMCard simCard) {
+    public String selectKindNum(/*@PathVariable SIMCard simCard*/Map<String, Object> model, @PathVariable String simCard) {
         model.put("simCard", simCard);
         return "purchase1";
     }
