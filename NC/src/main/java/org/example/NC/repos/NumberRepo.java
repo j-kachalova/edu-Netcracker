@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface NumberRepo extends JpaRepository<NumberSIM, Integer> {
-
+   NumberSIM findByNum(String number);
 }
 

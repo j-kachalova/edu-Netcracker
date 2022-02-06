@@ -43,12 +43,15 @@ public class ClientController {
         return "purchase1";
     }
     @PostMapping("/purchase1")
-    public String submitKindSIM(@RequestParam String kind, SIMCard simCard) {
+    public String submitKindSIM(@RequestParam String kind, SIMCard simCard, NumberSIM numberSIM) {
         simCardDTO.setKind(kind);
         simCard.setNumber(simCardDTO.getNumber());
         simCard.setKind(simCardDTO.getKind());
         System.out.println(simCard);
         simCardRepo.save(simCard);
+        numberSIM = numberRepo.findByNum(simCard.getNumber());
+        numberSIM.setUsed(true);
+        numberRepo.save(numberSIM);
         return "purchase2";
     }
     @PostMapping("/purchase2")
