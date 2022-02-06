@@ -1,10 +1,7 @@
 package org.example.NC.controller;
 
 import com.sun.source.doctree.SeeTree;
-import org.example.NC.domain.Human;
-import org.example.NC.domain.NumberSIM;
-import org.example.NC.domain.Role;
-import org.example.NC.domain.SIMCard;
+import org.example.NC.domain.*;
 import org.example.NC.repos.NumberRepo;
 import org.example.NC.repos.SIMCardRepo;
 import org.example.NC.repos.UserRepo;
@@ -25,58 +22,33 @@ import java.util.stream.StreamSupport;
 
 
 @Controller
-//@RequestMapping("/u")
 @PreAuthorize("hasAuthority('USER')")
 public class ClientController {
     @Autowired
     private UserRepo userRepo;
     @Autowired
     private SIMCardRepo simCardRepo;
-
-    /*public String chooseTariff(@RequestParam String username,
-                               @RequestParam String name,
-                               @RequestParam String surname,
-                               @RequestParam String patronymic,
-                               @RequestParam Map<String, String> form,
-                               @RequestParam("userId") Human user,
-                               Model model){
-        //model.addAttribute("users", userRepo.findAll());
-
-        return "";
-    }   */
     @Autowired
     private NumberRepo numberRepo;
-    private SIMCard simCardDTO = new SIMCard();
+    private BuyingDTO simCardDTO = new BuyingDTO();
 
     @GetMapping("/personalArea")
     public String personalArea(Map<String, Object> model) {
         return "personalArea";
     }
-
-    /*@PostMapping("/sim1")
-    public String chooseKindSIM( @RequestParam String kind,
-                                 SIMCard simCard) {
-        //model.put("human", userRepo.findByUsername(user.getUsername()));
-        simCard.setKind(kind);
-        simCardRepo.save(simCard);
-        return "redirect:/purchase2";
-    }*/
     @PostMapping("/purchase")
-    public String submitNum(@RequestParam String number,  @ModelAttribute("simCard") SIMCard simCard) {
-        simCard.setNumber(number);
+    public String submitNum(@RequestParam String number) {
         simCardDTO.setNumber(number);
         System.out.println(simCardDTO);
         return "purchase1";
     }
     @PostMapping("/purchase1")
-    public String submitKindSIM(@RequestParam String kind /*@RequestParam("id")*/, @RequestParam String simCard, SIMCard newSim) {
-        //simCard.setKind(kind);
-        System.out.println(simCard);
+    public String submitKindSIM(@RequestParam String kind, SIMCard simCard) {
         simCardDTO.setKind(kind);
-        newSim.setNumber(simCardDTO.getNumber());
-        newSim.setKind(simCardDTO.getKind());
-        System.out.println(newSim);
-        simCardRepo.save(newSim);
+        simCard.setNumber(simCardDTO.getNumber());
+        simCard.setKind(simCardDTO.getKind());
+        System.out.println(simCard);
+        simCardRepo.save(simCard);
         return "purchase2";
     }
     @PostMapping("/purchase2")
@@ -113,9 +85,4 @@ public class ClientController {
 
         return "purchase2";
     }
-   /* @PostMapping("/sim1")
-    public String chooseNum(Human user, Map<String, Object> model) {
-        //model.put("human", userRepo.findByUsername(user.getUsername()));
-        return "/sim2";
-    }*/
 }

@@ -17,7 +17,6 @@
                 <#list num as num>
                     <label><input type="radio" name="number" value="${num.num}">${num.num}</label>
                 </#list>
-                <div>${simCard}</div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <div><input class="button" type="submit" value="Далее"/></div>
             </form>

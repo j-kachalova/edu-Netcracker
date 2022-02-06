@@ -16,7 +16,6 @@
                     <option value="virtual">Виртуальная</option>
                     <option value="physical">Физическая</option>
                 </select>
-                <input type="text" name="simCard" value="${simCard.number}" />
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <div><input class="button" type="submit" value="Далее"/></div>
             </form>
