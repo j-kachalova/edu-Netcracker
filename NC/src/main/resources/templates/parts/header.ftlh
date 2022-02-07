@@ -9,7 +9,7 @@
                     </a>
                 </div>
                 <a class="header__link" href="/"> Тарифы </a>
-                <a class="header__link" href="#"> Акции </a>
+
                 <a class="header__link" href="../personalArea"> Личный кабинет </a>
                 <#nested>
             </div>

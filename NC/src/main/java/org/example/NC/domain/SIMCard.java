@@ -15,5 +15,4 @@ public class SIMCard {
     private Integer id;
     private String number;
     private String kind;
-    private Integer price;
 }

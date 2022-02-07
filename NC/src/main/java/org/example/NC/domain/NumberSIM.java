@@ -11,6 +11,7 @@ public class NumberSIM {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String num;
+    private Integer price;
     private boolean isUsed;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
