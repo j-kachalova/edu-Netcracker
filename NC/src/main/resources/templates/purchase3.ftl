@@ -13,9 +13,10 @@
             <#list tariff as tariff>
                 <div>${tariff.key.name}</div>
                 <#list tariff.value as value>
-                <form action="/tariff_choice" method="post">
+                <form action="/purchase2" method="post">
                     <div>${value.name}</div>
                     <div>${value.price}</div>
+                    <input type="hidden" name="tariffId" value="${value.id}">
                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
                     <div><input type="submit" value="Выбрать"/></div>
                 </form>

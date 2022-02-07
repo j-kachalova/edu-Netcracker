@@ -4,6 +4,7 @@ import com.sun.source.doctree.SeeTree;
 import org.example.NC.domain.*;
 import org.example.NC.repos.NumberRepo;
 import org.example.NC.repos.SIMCardRepo;
+import org.example.NC.repos.TariffRepo;
 import org.example.NC.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,10 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -30,34 +28,56 @@ public class ClientController {
     private SIMCardRepo simCardRepo;
     @Autowired
     private NumberRepo numberRepo;
+    @Autowired
+    private TariffRepo tariffRepo;
     private BuyingDTO simCardDTO = new BuyingDTO();
 
     @GetMapping("/personalArea")
     public String personalArea(Map<String, Object> model) {
         return "personalArea";
     }
-    @PostMapping("/purchase")
+    @PostMapping("/purchase1")
     public String submitNum(@RequestParam String number) {
         simCardDTO.setNumber(number);
         System.out.println(simCardDTO);
         return "purchase1";
     }
-    @PostMapping("/purchase1")
-    public String submitKindSIM(@RequestParam String kind, SIMCard simCard, NumberSIM numberSIM) {
+    @PostMapping("/purchase3")
+    public String submitKindSIM(@RequestParam String kind, SIMCard simCard, NumberSIM numberSIM, Map<String, Object> model) {
         simCardDTO.setKind(kind);
-        simCard.setNumber(simCardDTO.getNumber());
+        /*simCard.setNumber(simCardDTO.getNumber());
         simCard.setKind(simCardDTO.getKind());
         System.out.println(simCard);
         simCardRepo.save(simCard);
         numberSIM = numberRepo.findByNum(simCard.getNumber());
         numberSIM.setUsed(true);
-        numberRepo.save(numberSIM);
-        return "purchase2";
+        numberRepo.save(numberSIM);*/
+        Stream<Tariff> tariffStream = StreamSupport.stream(tariffRepo.findAll().spliterator(), false);
+        //Map<Tariff, TariffСategory> tariffs = tariffRepo.findAll();
+        Map<TariffСategory, List<Tariff>> tariffByCategory = tariffStream.collect(
+                Collectors.groupingBy(Tariff::getCategory));
+
+        for(Map.Entry<TariffСategory, List<Tariff>> item : tariffByCategory.entrySet()){
+
+            System.out.println(item.getKey().getName());
+            for(Tariff tariff : item.getValue()){
+
+                System.out.println(tariff.getName());
+            }
+            System.out.println();
+        }
+        model.put("tariff", tariffByCategory.entrySet());
+        return "purchase3";
     }
     @PostMapping("/purchase2")
-    public String submitDelivery() {
-        return "personalArea";
+    public String submitTariff(@RequestParam Integer tariffId, Optional<Tariff> tariff) {
+        System.out.println(tariffId);
+        tariff = tariffRepo.findById(tariffId);
+        System.out.println(tariff.get().toString());
+        simCardDTO.setTariff(tariff.get());
+        return "purchase2";
     }
+
     @GetMapping("/purchase")
     public String selectNum(Human user, Map<String, Object> model, @ModelAttribute("simCard") SIMCard simCard) {
         //Human userFromDb = userRepo.findByUsername(user.getUsername());
@@ -78,14 +98,5 @@ public class ClientController {
 
         return "purchase";
     }
-    @GetMapping("/purchase/{simCard}")
-    public String selectKindNum(/*@PathVariable SIMCard simCard*/Map<String, Object> model, @PathVariable String simCard) {
-        model.put("simCard", simCard);
-        return "purchase1";
-    }
-    @GetMapping("/purchase2")
-    public String selectDelivery(  Map<String, Object> model) {
 
-        return "purchase2";
-    }
 }

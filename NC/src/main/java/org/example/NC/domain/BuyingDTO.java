@@ -9,4 +9,5 @@ public class BuyingDTO {
     private String number;
     private String kind;
     private Integer price;
+    private Tariff tariff;
 }

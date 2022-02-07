@@ -9,7 +9,7 @@
     </@h.header>
     <main class="main">
         <div>
-            <form action="/purchase1 " method="post">
+            <form action="/purchase3 " method="post">
 
                 <select name="kind">
                     <option disabled selected value="">Выберите вид SIM-карты</option>

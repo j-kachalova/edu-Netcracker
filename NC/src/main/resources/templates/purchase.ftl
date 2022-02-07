@@ -9,7 +9,7 @@
     </@h.header>
     <main class="main">
         <div>
-            <form modelAttribute="simCard" action="/purchase " method="post">
+            <form modelAttribute="simCard" action="/purchase1 " method="post">
                 <div>${human.name}</div>
                 <div>${human.surname}</div>
                 <div>${human.patronymic}</div>

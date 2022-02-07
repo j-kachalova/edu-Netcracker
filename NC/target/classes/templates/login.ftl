@@ -4,5 +4,5 @@
 <@c.page>
     Вход в личный кабинет
 <@l.loginTmp "/login" />
-<a class="button" href="/registration">Add new user</a>
+<a class="button" href="/registration">Зарегистрироваться</a>
 </@c.page>
