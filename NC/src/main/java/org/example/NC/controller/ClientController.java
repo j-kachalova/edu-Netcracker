@@ -65,15 +65,9 @@ public class ClientController {
         Integer resultPrice;
         if(kind=="physical") resultPrice= numberSIM.getPrice() + price;
         else resultPrice= numberSIM.getPrice();
-        /*simCard.setNumber(simCardDTO.getNumber());
-        simCard.setKind(simCardDTO.getKind());
-        System.out.println(simCard);
-        simCardRepo.save(simCard);
-        numberSIM = numberRepo.findByNum(simCard.getNumber());
-        numberSIM.setUsed(true);
-        numberRepo.save(numberSIM);*/
+
         Stream<Tariff> tariffStream = StreamSupport.stream(tariffRepo.findAll().spliterator(), false);
-        //Map<Tariff, TariffСategory> tariffs = tariffRepo.findAll();
+
         Map<TariffСategory, List<Tariff>> tariffByCategory = tariffStream.collect(
                 Collectors.groupingBy(Tariff::getCategory));
 
@@ -95,33 +89,56 @@ public class ClientController {
         return "purchase3";
     }
     @PostMapping("/purchase2")
-    public String submitTariff(RedirectAttributes redirectAttributes, @RequestParam String kind, @RequestParam String number, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+    public String submitTariff(@RequestParam String kind, @RequestParam String number, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
         System.out.println(tariffId);
-        if(kind=="physical") return "purchase2";
-        redirectAttributes.addFlashAttribute("number", number);
-        redirectAttributes.addFlashAttribute("kind", kind);
-        redirectAttributes.addFlashAttribute("tariffId", tariffId);
-        redirectAttributes.addFlashAttribute("resultPrice", resultPrice);
-        return "redirect:/result";
-    }
-    @RequestMapping(value = "/result", method = RequestMethod.GET)
-    public String viewResult(Model model, Optional<Tariff> tariff){
-        String number = (String)model.asMap().get("number");
-        String kind = (String)model.asMap().get("kind");
-        Integer tariffId = (Integer) model.asMap().get("tariffId");
-        tariff = tariffRepo.findById(tariffId);
-        System.out.println(tariff.get().toString());
-        Integer resultPrice = (Integer) model.asMap().get("resultPrice");
-        Human userFromDb = (Human) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
-        model.addAttribute("human", userFromDb);
         model.addAttribute("number", number);
         model.addAttribute("kind", kind);
-        model.addAttribute("tariff", tariff.get());
         model.addAttribute("resultPrice", resultPrice);
+
+        if(kind.equals("physical")){
+            model.addAttribute("tariffId", tariffId);
+            return "purchase2";
+        }
+
+        Human userFromDb = (Human) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+
+        model.addAttribute("human", userFromDb);
+        model.addAttribute("kindRes","виртуальная SIM-карта");
+
+        tariff = tariffRepo.findById(tariffId);
+        model.addAttribute("tariff", tariff.get());
+
         return "result";
     }
-    @GetMapping("/purchase")
+    @PostMapping("/purchase4")
+    public String submitDelivery(@RequestParam String receive, @RequestParam String number, @RequestParam String kind, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+        model.addAttribute("number", number);
+        model.addAttribute("kind", kind);
+        model.addAttribute("tariffId", tariffId);
+        model.addAttribute("resultPrice", resultPrice);
+        model.addAttribute("receive", receive);
+        return "purchase4";
+    }
+    @PostMapping("/toResult")
+    public String submitPayment(@RequestParam String receive, @RequestParam String number, @RequestParam String kind, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+        model.addAttribute("number", number);
+        model.addAttribute("kind", kind);
+        model.addAttribute("tariffId", tariffId);
+        model.addAttribute("resultPrice", resultPrice);
+        model.addAttribute("receive", receive);
+
+        Human userFromDb = (Human) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+
+        model.addAttribute("human", userFromDb);
+        model.addAttribute("kindRes","физическая SIM-карта");
+
+        tariff = tariffRepo.findById(tariffId);
+        model.addAttribute("tariff", tariff.get());
+        return "result";
+    }
+        @GetMapping("/purchase")
     public String selectNum(Human user, Map<String, Object> model, @ModelAttribute("simCard") SIMCard simCard) {
         //Human userFromDb = userRepo.findByUsername(user.getUsername());
         Human userFromDb = (Human) SecurityContextHolder
@@ -142,5 +159,4 @@ public class ClientController {
 
         return "purchase";
     }
-
 }

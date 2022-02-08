@@ -12,7 +12,7 @@
             <form modelAttribute="simCard" action="/personalArea " method="post">
 
                 <div>${number}</div>
-                <div>${kind}</div>
+                <div>${kindRes}</div>
                 <div>${tariff.name}</div>
                 <div>${resultPrice}</div>
                 <input type="hidden" name="number" value="${number}" />
@@ -24,5 +24,4 @@
             </form>
         </div>
     </main>
-    <script src="script.js"></script>
 </@c.page>

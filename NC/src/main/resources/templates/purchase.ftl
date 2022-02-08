@@ -22,5 +22,5 @@
             </form>
         </div>
     </main>
-    <script src="script.js"></script>
+
 </@c.page>

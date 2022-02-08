@@ -9,12 +9,16 @@
     </@h.header>
     <main class="main">
         <div>
-            <form action="/purchase2 " method="post">
-                <select name="kindSim">
+            <form action="/purchase4 " method="post">
+                <select name="receive">
                     <option disabled selected value="">Способ получения</option>
-                    <option value="virtual">Курьером</option>
-                    <option value="physical">В салоне</option>
+                    <option value="courier">Курьером</option>
+                    <option value="shop">В салоне</option>
                 </select>
+                <input type="hidden" name="number" value="${number}" />
+                <input type="hidden" name="kind" value="${kind}" />
+                <input type="hidden" name="resultPrice" value="${resultPrice}" />
+                <input type="hidden" name="tariffId" value="${tariffId}">
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <div><input class="button" type="submit" value="Далее"/></div>
             </form>
