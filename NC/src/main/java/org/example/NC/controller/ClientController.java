@@ -34,7 +34,7 @@ public class ClientController {
     @Autowired
     private TariffRepo tariffRepo;
     private final Integer price = 200;
-    private BuyingDTO simCardDTO = new BuyingDTO();
+
 
     @GetMapping("/personalArea")
     public String personalArea() {
@@ -42,8 +42,8 @@ public class ClientController {
     }
     @PostMapping("/personalArea")
     public String buying(SIMCard simCard, NumberSIM numberSIM ) {
-        simCard.setNumber(simCardDTO.getNumber());
-        simCard.setKind(simCardDTO.getKind());
+        /*simCard.setNumber(simCardDTO.getNumber());
+        simCard.setKind(simCardDTO.getKind());*/
         System.out.println(simCard);
         simCardRepo.save(simCard);
         numberSIM = numberRepo.findByNum(simCard.getNumber());
@@ -52,17 +52,17 @@ public class ClientController {
         return "personalArea";
     }
     @PostMapping("/purchase1")
-    public String submitNum(@RequestParam String number) {
-        simCardDTO.setNumber(number);
-        System.out.println(simCardDTO);
+    public String submitNum(@RequestParam String number, Model model) {
+        model.addAttribute("number",number);
+        System.out.println(number);
         return "purchase1";
     }
     @PostMapping("/purchase3")
-    public String submitKindSIM(@RequestParam String kind, SIMCard simCard, NumberSIM numberSIM, Map<String, Object> model) {
-        simCardDTO.setKind(kind);
-        numberSIM = numberRepo.findByNum(simCardDTO.getNumber());
-        if(kind=="physical") simCardDTO.setPrice(numberSIM.getPrice() + price);
-        else simCardDTO.setPrice(numberSIM.getPrice());
+    public String submitKindSIM(@RequestParam String kind, @RequestParam String number, SIMCard simCard, NumberSIM numberSIM, Map<String, Object> model) {
+        numberSIM = numberRepo.findByNum(number);
+        Integer resultPrice;
+        if(kind=="physical") resultPrice= numberSIM.getPrice() + price;
+        else resultPrice= numberSIM.getPrice();
         /*simCard.setNumber(simCardDTO.getNumber());
         simCard.setKind(simCardDTO.getKind());
         System.out.println(simCard);
@@ -85,19 +85,24 @@ public class ClientController {
             System.out.println();
         }
         model.put("tariff", tariffByCategory.entrySet());
+        model.put("number",number);
+        model.put("kind", kind);
+        model.put("resultPrice", resultPrice);
+        System.out.println(number);
+        System.out.println(kind);
         return "purchase3";
     }
     @PostMapping("/purchase2")
-    public String submitTariff(@RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+    public String submitTariff(@RequestParam String kind, @RequestParam String number, @RequestParam String resultPrice,@RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
         System.out.println(tariffId);
         tariff = tariffRepo.findById(tariffId);
         System.out.println(tariff.get().toString());
-        simCardDTO.setTariff(tariff.get());
-        if(simCardDTO.getKind()=="physical") return "purchase2";
-        model.addAttribute("human", simCardDTO.getUser());
-        model.addAttribute("number", simCardDTO.getNumber());
-        model.addAttribute("tariff", simCardDTO.getTariff().getName());
-        model.addAttribute("price", simCardDTO.getPrice());
+        if(kind=="physical") return "purchase2";
+        //model.addAttribute("human", simCardDTO.getUser());
+        model.addAttribute("number", number);
+        model.addAttribute("kind", kind);
+        model.addAttribute("tariff", tariff.get().getName());
+        model.addAttribute("resultPrice", resultPrice);
         return "result";
     }
 
@@ -113,7 +118,7 @@ public class ClientController {
             System.out.println(number.get(i).toString());
         }
         if (userFromDb != null) {
-            simCardDTO.setUser(userFromDb);
+            //simCardDTO.setUser(userFromDb);
             model.put("human", userFromDb);
             model.put("num", number);
             model.put("simCard", simCard);

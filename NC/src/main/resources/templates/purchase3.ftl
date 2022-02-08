@@ -17,6 +17,9 @@
                     <div>${value.name}</div>
                     <div>${value.price}</div>
                     <input type="hidden" name="tariffId" value="${value.id}">
+                    <input type="hidden" name="number" value="${number}" />
+                    <input type="hidden" name="kind" value="${kind}" />
+                    <input type="hidden" name="resultPrice" value="${resultPrice}" />
                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
                     <div><input type="submit" value="Выбрать"/></div>
                 </form>

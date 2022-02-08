@@ -10,12 +10,11 @@
     <main class="main">
         <div>
             <form modelAttribute="simCard" action="/personalArea " method="post">
-                <div>${human.name}</div>
-                <div>${human.surname}</div>
-                <div>${human.patronymic}</div>
+
                 <div>${number}</div>
+                <div>${kind}</div>
                 <div>${tariff}</div>
-                <div>${price}</div>
+                <div>${resultPrice}</div>
 
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <div><input class="button" type="submit" value="Купить"/></div>
