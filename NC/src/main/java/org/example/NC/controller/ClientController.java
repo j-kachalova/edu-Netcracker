@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,14 +42,15 @@ public class ClientController {
         return "personalArea";
     }
     @PostMapping("/personalArea")
-    public String buying(SIMCard simCard, NumberSIM numberSIM ) {
-        /*simCard.setNumber(simCardDTO.getNumber());
-        simCard.setKind(simCardDTO.getKind());*/
-        System.out.println(simCard);
-        simCardRepo.save(simCard);
-        numberSIM = numberRepo.findByNum(simCard.getNumber());
+    public String buying(SIMCard simCard, NumberSIM numberSIM, @RequestParam String kind, @RequestParam String number, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff) {
+        simCard.setNumber(number);
+        simCard.setKind(kind);
+        System.out.println(simCard.toString());
+        //simCardRepo.save(simCard);
+
+        /*numberSIM = numberRepo.findByNum(simCard.getNumber());
         numberSIM.setUsed(true);
-        numberRepo.save(numberSIM);
+        numberRepo.save(numberSIM);*/
         return "personalArea";
     }
     @PostMapping("/purchase1")
@@ -93,19 +95,32 @@ public class ClientController {
         return "purchase3";
     }
     @PostMapping("/purchase2")
-    public String submitTariff(@RequestParam String kind, @RequestParam String number, @RequestParam String resultPrice,@RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+    public String submitTariff(RedirectAttributes redirectAttributes, @RequestParam String kind, @RequestParam String number, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
         System.out.println(tariffId);
+        if(kind=="physical") return "purchase2";
+        redirectAttributes.addFlashAttribute("number", number);
+        redirectAttributes.addFlashAttribute("kind", kind);
+        redirectAttributes.addFlashAttribute("tariffId", tariffId);
+        redirectAttributes.addFlashAttribute("resultPrice", resultPrice);
+        return "redirect:/result";
+    }
+    @RequestMapping(value = "/result", method = RequestMethod.GET)
+    public String viewResult(Model model, Optional<Tariff> tariff){
+        String number = (String)model.asMap().get("number");
+        String kind = (String)model.asMap().get("kind");
+        Integer tariffId = (Integer) model.asMap().get("tariffId");
         tariff = tariffRepo.findById(tariffId);
         System.out.println(tariff.get().toString());
-        if(kind=="physical") return "purchase2";
-        //model.addAttribute("human", simCardDTO.getUser());
+        Integer resultPrice = (Integer) model.asMap().get("resultPrice");
+        Human userFromDb = (Human) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        model.addAttribute("human", userFromDb);
         model.addAttribute("number", number);
         model.addAttribute("kind", kind);
-        model.addAttribute("tariff", tariff.get().getName());
+        model.addAttribute("tariff", tariff.get());
         model.addAttribute("resultPrice", resultPrice);
         return "result";
     }
-
     @GetMapping("/purchase")
     public String selectNum(Human user, Map<String, Object> model, @ModelAttribute("simCard") SIMCard simCard) {
         //Human userFromDb = userRepo.findByUsername(user.getUsername());
