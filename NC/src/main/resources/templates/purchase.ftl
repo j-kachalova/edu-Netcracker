@@ -8,12 +8,13 @@
         </div>
     </@h.header>
     <main class="main">
-        <div>
+        <div class="block">
+            <h1>Выберите номер</h1>
             <form modelAttribute="simCard" action="/purchase1 " method="post">
                 <div>${human.name}</div>
                 <div>${human.surname}</div>
                 <div>${human.patronymic}</div>
-                <div>${human.username}</div>
+
                 <#list num as num>
                     <label><input type="radio" name="number" value="${num.num}">${num.num}</label>
                 </#list>

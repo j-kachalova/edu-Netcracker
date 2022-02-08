@@ -6,7 +6,7 @@
 
     </@h.header>
     <main class="main">
-        <div class="tariff">
+        <div class="block">
             <h1>Тарифы</h1>
             <#list tariff as tariff>
                 <div>${tariff.key.name}</div>
@@ -15,7 +15,7 @@
                         <div>${value.name}</div>
                         <div>${value.price}</div>
                         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                        <div><input type="submit" value="Выбрать"/></div>
+                        <div><input class="button" type="submit" value="Выбрать"/></div>
                     </form>
                 </#list>
             <#else>

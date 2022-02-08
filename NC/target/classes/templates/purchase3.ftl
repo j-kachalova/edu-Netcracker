@@ -8,10 +8,10 @@
         </div>
     </@h.header>
     <main class="main">
-        <div class="tariff">
-            <h1>Тарифы</h1>
+        <div class="block">
+            <h1>Выберите тариф</h1>
             <#list tariff as tariff>
-                <div>${tariff.key.name}</div>
+                <h2>${tariff.key.name}</h2>
                 <#list tariff.value as value>
                 <form action="/purchase2" method="post">
                     <div>${value.name}</div>
@@ -21,7 +21,7 @@
                     <input type="hidden" name="kind" value="${kind}" />
                     <input type="hidden" name="resultPrice" value="${resultPrice}" />
                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                    <div><input type="submit" value="Выбрать"/></div>
+                    <div><input class="button" type="submit" value="Выбрать"/></div>
                 </form>
                 </#list>
             <#else>

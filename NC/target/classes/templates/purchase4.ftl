@@ -8,7 +8,8 @@
         </div>
     </@h.header>
     <main class="main">
-        <div>
+        <div class="block">
+            <h1>Выберите способ оплаты</h1>
             <form action="/toResult " method="post">
                 <select name="payment">
                     <option disabled selected value="">Способ оплаты</option>

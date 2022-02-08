@@ -61,7 +61,7 @@ body{
     display: flex;
     justify-content: flex-start;
 }
-.tariff{
+.block{
     padding: 50px 100px 50px 100px;
 }
 .button{

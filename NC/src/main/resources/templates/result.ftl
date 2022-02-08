@@ -8,19 +8,25 @@
         </div>
     </@h.header>
     <main class="main">
-        <div>
+        <div class="block">
             <form modelAttribute="simCard" action="/personalArea " method="post">
 
                 <div>${number}</div>
                 <div>${kindRes}</div>
-                <div>${tariff.name}</div>
+                <div>Тариф: ${tariff.name}</div>
+                <#if receive??>
+                    <div>${receive}</div>
+                </#if>
+                <#if payment??>
+                    <div>Оплата: ${payment}</div>
+                </#if>
                 <div>${resultPrice}</div>
                 <input type="hidden" name="number" value="${number}" />
                 <input type="hidden" name="kind" value="${kind}" />
                 <input type="hidden" name="resultPrice" value="${resultPrice}" />
                 <input type="hidden" name="tariffId" value="${tariff.id}">
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                <div><input class="button" type="submit" value="Купить"/></div>
+                <div><input class="button" type="submit" value="Заказать"/></div>
             </form>
         </div>
     </main>

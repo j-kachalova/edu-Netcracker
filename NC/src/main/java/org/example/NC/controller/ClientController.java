@@ -34,7 +34,6 @@ public class ClientController {
     private NumberRepo numberRepo;
     @Autowired
     private TariffRepo tariffRepo;
-    private final Integer price = 200;
 
 
     @GetMapping("/personalArea")
@@ -42,7 +41,11 @@ public class ClientController {
         return "personalArea";
     }
     @PostMapping("/personalArea")
-    public String buying(SIMCard simCard, NumberSIM numberSIM, @RequestParam String kind, @RequestParam String number, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff) {
+    public String buying(@RequestParam String kind,
+                         @RequestParam String number,
+                         @RequestParam Integer resultPrice,
+                         @RequestParam Integer tariffId,
+                         Optional<Tariff> tariff, SIMCard simCard, NumberSIM numberSIM) {
         simCard.setNumber(number);
         simCard.setKind(kind);
         System.out.println(simCard.toString());
@@ -60,9 +63,12 @@ public class ClientController {
         return "purchase1";
     }
     @PostMapping("/purchase3")
-    public String submitKindSIM(@RequestParam String kind, @RequestParam String number, SIMCard simCard, NumberSIM numberSIM, Map<String, Object> model) {
+    public String submitKindSIM(@RequestParam String number,
+                                @RequestParam String kind, SIMCard simCard,
+                                NumberSIM numberSIM, Map<String, Object> model) {
         numberSIM = numberRepo.findByNum(number);
         Integer resultPrice;
+        Integer price = 200;
         if(kind=="physical") resultPrice= numberSIM.getPrice() + price;
         else resultPrice= numberSIM.getPrice();
 
@@ -89,7 +95,12 @@ public class ClientController {
         return "purchase3";
     }
     @PostMapping("/purchase2")
-    public String submitTariff(@RequestParam String kind, @RequestParam String number, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+    public String submitTariff(@RequestParam String number,
+                               @RequestParam String kind,
+                               @RequestParam Integer resultPrice,
+                               @RequestParam Integer tariffId,
+                               Optional<Tariff> tariff,
+                               Model model) {
         System.out.println(tariffId);
         model.addAttribute("number", number);
         model.addAttribute("kind", kind);
@@ -112,7 +123,13 @@ public class ClientController {
         return "result";
     }
     @PostMapping("/purchase4")
-    public String submitDelivery(@RequestParam String receive, @RequestParam String number, @RequestParam String kind, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+    public String submitDelivery(@RequestParam String receive,
+                                 @RequestParam String number,
+                                 @RequestParam String kind,
+                                 @RequestParam Integer resultPrice,
+                                 @RequestParam Integer tariffId,
+                                 Optional<Tariff> tariff,
+                                 Model model) {
         model.addAttribute("number", number);
         model.addAttribute("kind", kind);
         model.addAttribute("tariffId", tariffId);
@@ -121,13 +138,20 @@ public class ClientController {
         return "purchase4";
     }
     @PostMapping("/toResult")
-    public String submitPayment(@RequestParam String receive, @RequestParam String number, @RequestParam String kind, @RequestParam Integer resultPrice, @RequestParam Integer tariffId, Optional<Tariff> tariff, Model model) {
+    public String submitPayment(@RequestParam String number,
+                                @RequestParam String kind,
+                                @RequestParam Integer resultPrice,
+                                @RequestParam Integer tariffId,
+                                @RequestParam String receive,
+                                @RequestParam String payment,
+                                Optional<Tariff> tariff,
+                                Model model) {
         model.addAttribute("number", number);
         model.addAttribute("kind", kind);
         model.addAttribute("tariffId", tariffId);
         model.addAttribute("resultPrice", resultPrice);
-        model.addAttribute("receive", receive);
-
+        model.addAttribute("receive", receive.equals("courier") ? "доставка курьером":"забрать в салоне");
+        model.addAttribute("payment", payment.equals("online") ? "онлайн":"при получении");
         Human userFromDb = (Human) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
 
@@ -143,12 +167,12 @@ public class ClientController {
         //Human userFromDb = userRepo.findByUsername(user.getUsername());
         Human userFromDb = (Human) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
-        List<NumberSIM> number = StreamSupport.stream(numberRepo.findAll().spliterator(), false)
+        List<NumberSIM> number = numberRepo.findAll().stream()
                 .filter(x -> !x.isUsed())
                 .collect(Collectors.toList());
-        for(int i=0; i<number.size(); i++) {
-            System.out.println(number.get(i).toString());
-        }
+            for (NumberSIM numberSIM : number) {
+                System.out.println(numberSIM.toString());
+            }
         if (userFromDb != null) {
             //simCardDTO.setUser(userFromDb);
             model.put("human", userFromDb);

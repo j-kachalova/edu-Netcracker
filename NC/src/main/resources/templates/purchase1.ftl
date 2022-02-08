@@ -8,7 +8,8 @@
         </div>
     </@h.header>
     <main class="main">
-        <div>
+        <div class="block">
+            <h1>Выберите вид SIM-карты</h1>
             <form action="/purchase3 " method="post">
 
                 <select name="kind">

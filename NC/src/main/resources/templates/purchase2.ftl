@@ -8,7 +8,8 @@
         </div>
     </@h.header>
     <main class="main">
-        <div>
+        <div class="block">
+            <h1>Выберите способ получения SIM-карты</h1>
             <form action="/purchase4 " method="post">
                 <select name="receive">
                     <option disabled selected value="">Способ получения</option>
@@ -20,7 +21,7 @@
                 <input type="hidden" name="resultPrice" value="${resultPrice}" />
                 <input type="hidden" name="tariffId" value="${tariffId}">
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                <div><input class="button" type="submit" value="Далее"/></div>
+                <div><input class="button" class="button" type="submit" value="Далее"/></div>
             </form>
         </div>
     </main>
